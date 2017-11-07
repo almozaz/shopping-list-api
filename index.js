@@ -1,6 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-const { shoppingLists } = require('./routes')
+const passport = require('./config/auth')
+const { shoppingLists, users } = require('./routes')
 
 const PORT = process.env.PORT || 3030
 
@@ -9,8 +10,10 @@ let app = express()
 app
   .use(bodyParser.urlencoded({ extended: true }))
   .use(bodyParser.json())
+  .use(passport.initialize())
 
   .use(shoppingLists)
+  .use(users)
 
   // catch 404 and forward to error handler
   .use((req, res, next) => {
